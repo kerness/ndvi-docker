@@ -17,11 +17,11 @@ def read_args() -> Dict[str, str]:
         "vector": str(sys.argv[2]),
     }
 
-def read_landsat_images(folder_name, prefix='LC'):
+def read_landsat_images(folder_name):
     file_list = os.listdir(folder_name)
     channel_list = []
     for f in file_list:
-        if (f.startswith(prefix) and f.endswith('.tif')):
+        if (f.startswith('LC') and f.endswith('.tif')):
             if 'band' in f:
                 channel_list.append(folder_name + f)
     channel_list.sort()
@@ -91,14 +91,14 @@ def export_to_raster(result, filename) -> None:
 
 
 def process_images(folder_name, vector) -> None:
-    clipped_folder = 'clipped_'
+    clipped_folder = './clipped/'
     bands = read_landsat_images('./')
 
     for band in bands:
         destination = clipped_folder + 'LC_clipped_band' + str(band) + '.tif'
         clip_area(vector, bands[band], destination)
     
-    index_res = calculate_index('ndvi', read_landsat_images('./', prefix="clipped_"))
+    index_res = calculate_index('ndvi', read_landsat_images('./clipped/'))
     export_to_raster(index_res, 'ndvi.tif')
 
 
