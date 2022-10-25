@@ -1,7 +1,6 @@
 Usage:
 
-docker build -t landsat .
-docker run --rm -v "$PWD:$PWD" -w "$PWD" landsat
+docker build -t landsat . && docker run --rm -v "$PWD:$PWD" -w "$PWD" landsat
 
 Required files:
 - unpacked LC081880252013080701T1-SC20191019161406.tar
